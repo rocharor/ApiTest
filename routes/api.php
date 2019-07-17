@@ -17,8 +17,7 @@ Route::post('login', 'API\UserController@login');
 Route::post('register', 'API\UserController@register');
 
 Route::group(['middleware' => 'auth:api'], function(){
-    Route::post('details', 'API\UserController@details');
-    Route::get('/providers', 'API\UserController@getProviders');
-    Route::post('/providers', 'API\UserController@postProviders');
-    Route::delete('/providers/{id}', 'API\UserController@deleteProviders');
+    Route::get('/providers', 'API\ProviderController@get');
+    Route::post('/providers', 'API\ProviderController@store');
+    Route::delete('/providers/{id}', 'API\ProviderController@delete');
 });
