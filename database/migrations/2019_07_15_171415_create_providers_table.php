@@ -15,11 +15,18 @@ class CreateProvidersTable extends Migration
     {
         Schema::create('providers', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('user_id');
             $table->string('name');
             $table->string('email');
-            $table->float('payment');
+            $table->float('monthly_payment');
             $table->timestamps();
             $table->softDeletes();
+
+            // $table->foreign('user_id')
+            //     ->references('id')
+            //     ->on('users')
+            //     ->onUpdate('cascade')
+            //     ->onDelete('cascade');
         });
     }
 
