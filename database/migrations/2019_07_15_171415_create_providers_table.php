@@ -15,10 +15,11 @@ class CreateProvidersTable extends Migration
     {
         Schema::create('providers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id');
+            $table->integer('user_id')->unsigned();
             $table->string('name');
             $table->string('email');
             $table->float('monthly_payment');
+            $table->tinyInteger('status')->default(0)->comment('0 = Inactive, 1 = Active');
             $table->timestamps();
             $table->softDeletes();
 

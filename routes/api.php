@@ -13,11 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('login', 'API\UserController@login');
-Route::post('register', 'API\UserController@register');
+Route::post('login', 'API\UserController@endpointLogin');
+Route::post('register', 'API\UserController@endpointRegister');
+Route::get('/providers/active-provider', 'API\ProviderController@endpointActiveProvider');
 
 Route::group(['middleware' => 'auth:api'], function(){
-    Route::get('/providers', 'API\ProviderController@get');
-    Route::post('/providers', 'API\ProviderController@store');
-    Route::delete('/providers/{id}', 'API\ProviderController@delete');
+    Route::get('/providers', 'API\ProviderController@endpointGet');
+    Route::get('/providers/monthly-payment', 'API\ProviderController@endpointTotalMonthlyPayment');
+    Route::post('/providers', 'API\ProviderController@endpointStore');
+    Route::delete('/providers/{id}', 'API\ProviderController@endpointDelete');
 });

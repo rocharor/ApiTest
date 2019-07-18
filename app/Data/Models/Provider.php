@@ -12,7 +12,7 @@ class Provider extends Authenticatable
     protected $table = 'providers';
 
     protected $fillable = [
-        'user_id', 'name', 'email', 'monthly_payment'
+        'user_id', 'name', 'email', 'monthly_payment', 'status'
     ];
 
     protected $hidden = [

@@ -4,12 +4,9 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
-use App\Models\Provider;
 use Illuminate\Http\Response;
 use App\Data\Services\ProviderService;
+use App\Exceptions\DefaultException;
 
 class ProviderController extends Controller
 {
@@ -20,51 +17,73 @@ class ProviderController extends Controller
         $this->service = $service;
     }
 
-    public function get()
-    {
-        $response = $this->service->getAll(Auth::user()->id);
-        dd($response);
-
-        return response()->json(['data' => $response], Response::HTTP_OK);
-    }
-
-    public function store(Request $request)
+    public function endpointGet()
     {
         try {
-            Validator::make($request->all(), [
-                'name' => 'required|string',
-                'email' => 'required|email|unique:providers',
-                'monthlyPayment' => 'required',
-            ])->validate();
+            $response = $this->service->getAll();
 
-            $provider = Provider::create([
-                'user_id' => Auth::user()->id,
-                'name' => $request->name,
-                'email' => $request->email,
-                'monthly_payment' => $request->monthlyPayment,
-            ]);
-
-            if ($provider) {
-                return response()->json(['data' => $provider], Response::HTTP_CREATED);
-            }
-
-        } catch(ValidationException $e) {
-            return response()->json(['error' => $e->errors()], Response::HTTP_BAD_REQUEST);
-        } catch(\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+            return response()->json(['data' => $response], Response::HTTP_OK);
+        } catch(DefaultException $e) {
+            return response()->json(['error' => [
+                'message' => $e->getMessage(),
+                'data' => $e->getContext()
+            ]], Response::HTTP_BAD_REQUEST);
         }
     }
 
-    public function delete(int $id)
+    public function endpointTotalMonthlyPayment()
     {
-        $result = Provider::where('id', $id)
-            ->where('user_id', Auth::user()->id)
-            ->delete();
+        try {
+            $response = $this->service->totalMonthlyPayment();
 
-        if ($result) {
-            return response()->json(['data' => $result], Response::HTTP_NO_CONTENT);
+            return response()->json(['data' => $response], Response::HTTP_OK);
+        } catch(DefaultException $e) {
+            return response()->json(['error' => [
+                'message' => $e->getMessage(),
+                'data' => $e->getContext()
+            ]], Response::HTTP_BAD_REQUEST);
         }
+    }
 
-        return response()->json(['error' => __('Error Delete')], Response::HTTP_BAD_REQUEST);
+    public function endpointActiveProvider(Request $request)
+    {
+        try {
+            $response = $this->service->activeProvider($request->ref);
+
+            return response()->json(['data' => $response], Response::HTTP_OK);
+        } catch(DefaultException $e) {
+            return response()->json(['error' => [
+                'message' => $e->getMessage(),
+                'data' => $e->getContext()
+            ]], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    public function endpointStore(Request $request)
+    {
+        try {
+            $response = $this->service->store($request->all());
+
+            return response()->json(['data' => $response], Response::HTTP_CREATED);
+        } catch(DefaultException $e) {
+            return response()->json(['error' => [
+                'message' => $e->getMessage(),
+                'data' => $e->getContext()
+            ]], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    public function endpointDelete(int $id)
+    {
+        try {
+            $response = $this->service->delete($id);
+
+            return response()->json(['data' => $response], Response::HTTP_NO_CONTENT);
+        } catch(DefaultException $e) {
+            return response()->json(['error' => [
+                'message' => $e->getMessage(),
+                'data' => $e->getContext()
+            ]], Response::HTTP_BAD_REQUEST);
+        }
     }
 }

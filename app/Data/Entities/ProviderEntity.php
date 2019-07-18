@@ -2,7 +2,9 @@
 
 namespace App\Data\Entities;
 
-class ProviderEntity
+use JsonSerializable;
+
+class ProviderEntity implements JsonSerializable
 {
     private $id;
     private $userId;
@@ -55,5 +57,29 @@ class ProviderEntity
     {
         $this->monthlyPayment = $value;
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        $data = [];
+
+        $getters = array_filter(get_class_methods($this), function ($method) {
+            return 'get' === substr($method, 0, 3);
+        });
+
+        foreach ($getters as $method) {
+            $key = lcfirst(str_replace('get', '', $method));
+            $value = $this->$method();
+
+            if (is_object($value) && method_exists($value, 'toArray')) {
+                $value = $value->toArray();
+            } elseif (is_object($value)) {
+                $value = null;
+            }
+
+            $data[$key] = $value;
+        }
+
+        return $data;
     }
 }
