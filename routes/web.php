@@ -12,5 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('documentation', [
+        'title' => 'teste 123',
+        // 'file' => 'https://petstore.swagger.io/v2/swagger.json'
+        'file' => '/swagger/swagger.json'
+    ]);
 });

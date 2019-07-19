@@ -1,0 +1,231 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Documentação da API de teste ",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000"
+        }
+    ],
+    "paths": {
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Autenticação"
+                ],
+                "summary": "Registra um novo usuário/empresa.",
+                "responses": {
+                    "200": {
+                        "description": "Retorna o access token JWT para acesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccessToken"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro de validação de campo ou erro de comunicação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorWithContext"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Autenticação"
+                ],
+                "summary": "Acessa a conta registrada do usuário/empresa.",
+                "responses": {
+                    "200": {
+                        "description": "Retorna o access token JWT para acesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccessToken"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro de validação de campo ou erro de comunicação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorWithContext"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/providers": {
+            "get": {
+                "tags": [
+                    "Fornecedor"
+                ],
+                "summary": "Busca todos os fornecedores do usuário/empresa.",
+                "responses": {
+                    "200": {
+                        "description": "Retorna o todos fornecedores cadastrados.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseGetProvider"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro de validação de campo ou erro de comunicação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorWithContext"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Fornecedor"
+                ],
+                "summary": "Cadastra um novo fornecedores do usuário/empresa.",
+                "responses": {
+                    "201": {
+                        "description": "Retorna o fornecedore cadastrado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponsePostProvider"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro de validação de campo ou erro de comunicação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorWithContext"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Fornecedor"
+                ],
+                "summary": "Deleta um fornecedore do usuário/empresa.",
+                "responses": {
+                    "204": {
+                        "description": "Não possui retorno."
+                    },
+                    "400": {
+                        "description": "Erro de validação de campo ou erro de comunicação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorWithContext"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ErrorWithContext": {
+                "title": "Error with context model",
+                "properties": {
+                    "error": {
+                        "type": "object",
+                        "properties": {
+                            "message": {
+                                "type": "string"
+                            },
+                            "data": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "AccessToken": {
+                "title": "Retorno o access token",
+                "properties": {
+                    "access_token": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ResponseGetProvider": {
+                "title": "Retorno de fornecedores",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "monthlyPayment": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "ResponsePostProvider": {
+                "title": "Retorno de cadastro de fornecedor",
+                "properties": {
+                    "data": {
+                    "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "monthlyPayment": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
