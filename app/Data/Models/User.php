@@ -28,4 +28,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Provider::class,'user_id', 'id');
     }
+
+    public function address()
+    {
+        return $this->hasOne(Address::class,'user_id', 'id');
+    }
+
+    public function contact()
+    {
+        return $this->hasOne(Contact::class,'user_id', 'id');
+    }
 }

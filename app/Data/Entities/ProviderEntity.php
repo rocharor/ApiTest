@@ -61,25 +61,11 @@ class ProviderEntity implements JsonSerializable
 
     public function jsonSerialize()
     {
-        $data = [];
-
-        $getters = array_filter(get_class_methods($this), function ($method) {
-            return 'get' === substr($method, 0, 3);
-        });
-
-        foreach ($getters as $method) {
-            $key = lcfirst(str_replace('get', '', $method));
-            $value = $this->$method();
-
-            if (is_object($value) && method_exists($value, 'toArray')) {
-                $value = $value->toArray();
-            } elseif (is_object($value)) {
-                $value = null;
-            }
-
-            $data[$key] = $value;
-        }
-
-        return $data;
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'email' => $this->getEmail(),
+            'monthlyPayment' => $this->getMonthlyPayment(),
+        ];
     }
 }

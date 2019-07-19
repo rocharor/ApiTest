@@ -8,9 +8,6 @@ class UserEntity
     private $name;
     private $email;
     private $cnpj;
-    private $address;
-    private $cep;
-    private $phone;
     private $password;
 
     public function getId()
@@ -28,18 +25,6 @@ class UserEntity
     public function getCnpj()
     {
         return $this->cnpj;
-    }
-    public function getAddress()
-    {
-        return $this->address;
-    }
-    public function getCep()
-    {
-        return $this->cep;
-    }
-    public function getPhone()
-    {
-        return $this->phone;
     }
     public function getPassword()
     {
@@ -64,21 +49,6 @@ class UserEntity
     public function setCnpj($value): self
     {
         $this->cnpj = $value;
-        return $this;
-    }
-    public function setAddress($value): self
-    {
-        $this->address = $value;
-        return $this;
-    }
-    public function setCep($value): self
-    {
-        $this->cep = $value;
-        return $this;
-    }
-    public function setPhone($value): self
-    {
-        $this->phone = $value;
         return $this;
     }
     public function setPassword($value): self

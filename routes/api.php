@@ -17,9 +17,13 @@ Route::post('login', 'API\UserController@endpointLogin');
 Route::post('register', 'API\UserController@endpointRegister');
 Route::get('/providers/active-provider', 'API\ProviderController@endpointActiveProvider');
 
-Route::group(['middleware' => 'auth:api'], function(){
+Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/providers', 'API\ProviderController@endpointGet');
     Route::get('/providers/monthly-payment', 'API\ProviderController@endpointTotalMonthlyPayment');
     Route::post('/providers', 'API\ProviderController@endpointStore');
     Route::delete('/providers/{id}', 'API\ProviderController@endpointDelete');
 });
+
+Route::get('/error', function () {
+    return response()->json(['data' => __('Not Authorized')], 401);
+})->name('error');

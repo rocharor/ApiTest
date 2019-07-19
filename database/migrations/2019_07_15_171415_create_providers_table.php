@@ -15,7 +15,7 @@ class CreateProvidersTable extends Migration
     {
         Schema::create('providers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
             $table->string('name');
             $table->string('email');
             $table->float('monthly_payment');
@@ -23,11 +23,9 @@ class CreateProvidersTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            // $table->foreign('user_id')
-            //     ->references('id')
-            //     ->on('users')
-            //     ->onUpdate('cascade')
-            //     ->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

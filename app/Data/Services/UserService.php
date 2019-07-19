@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\DefaultException;
 use App\Data\Entities\UserEntity;
+use App\Data\Entities\AddressEntity;
+use App\Data\Entities\ContactEntity;
 
 class UserService
 {
@@ -55,13 +57,17 @@ class UserService
                 ->setName($params['name'])
                 ->setEmail($params['email'])
                 ->setCnpj($params['cnpj'])
-                ->setAddress($params['address'])
-                ->setCep($params['cep'])
-                ->setPhone($params['phone'])
                 ->setPassword(bcrypt($params['password']));
 
+            $addressEntity = (new AddressEntity)
+                ->setAddress($params['address'])
+                ->setCep($params['cep']);
 
-            $token = $this->repository->store($userEntity);
+            $contactEntity = (new ContactEntity)
+                ->setPhone($params['phone']);
+
+
+            $token = $this->repository->store($userEntity, $addressEntity, $contactEntity);
 
             if (!is_null($token)) {
                 return $token;
