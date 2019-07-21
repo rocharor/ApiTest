@@ -43,13 +43,13 @@ class UserService
     {
         try {
             Validator::make($params, [
-                'name' => 'required',
-                'email' => 'required|email|unique:users',
-                'cnpj' => 'required|unique:users',
+                'name' => 'required|string',
+                'email' => 'required|email',
+                'cnpj' => 'required',
                 'address' => 'required|string',
                 'cep' => 'required',
                 'phone' => 'required',
-                'password' => 'required',
+                'password' => 'required|string',
                 'confirm_password' => 'required|same:password',
             ])->validate();
 

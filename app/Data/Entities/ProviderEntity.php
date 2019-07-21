@@ -12,23 +12,23 @@ class ProviderEntity implements JsonSerializable
     private $email;
     private $monthlyPayment;
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
-    public function getUserId()
+    public function getUserId(): ?int
     {
         return $this->userId;
     }
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
-    public function getMonthlyPayment()
+    public function getMonthlyPayment(): ?float
     {
         return $this->monthlyPayment;
     }

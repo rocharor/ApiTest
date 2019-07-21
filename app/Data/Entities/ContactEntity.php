@@ -7,11 +7,11 @@ class ContactEntity
     private $id;
     private $phone;
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
-    public function getPhone()
+    public function getPhone(): ?string
     {
         return $this->phone;
     }

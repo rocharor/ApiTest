@@ -63,7 +63,7 @@
             "@php artisan key:generate --ansi"
         ],
         "test": [
-            "phpunit --testdox"
+            "./vendor/bin/phpunit --testdox"
         ]
     }
 }

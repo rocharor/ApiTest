@@ -8,15 +8,15 @@ class AddressEntity
     private $address;
     private $cep;
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
-    public function getAddress()
+    public function getAddress(): ?string
     {
         return $this->address;
     }
-    public function getCep()
+    public function getCep(): ?int
     {
         return $this->cep;
     }

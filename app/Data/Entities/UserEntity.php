@@ -10,23 +10,23 @@ class UserEntity
     private $cnpj;
     private $password;
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
-    public function getCnpj()
+    public function getCnpj(): ?string
     {
         return $this->cnpj;
     }
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }
