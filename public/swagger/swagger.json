@@ -7,6 +7,9 @@
     "servers": [
         {
             "url": "http://localhost:8000"
+        },
+        {
+            "url": "http://localhost"
         }
     ],
     "paths": {
@@ -16,6 +19,16 @@
                     "Autenticação"
                 ],
                 "summary": "Registra um novo usuário/empresa.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Register"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Retorna o access token JWT para acesso.",
@@ -46,6 +59,16 @@
                     "Autenticação"
                 ],
                 "summary": "Acessa a conta registrada do usuário/empresa.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Login"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Retorna o access token JWT para acesso.",
@@ -104,6 +127,16 @@
                     "Fornecedor"
                 ],
                 "summary": "Cadastra um novo fornecedores do usuário/empresa.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Provider"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": "Retorna o fornecedore cadastrado.",
@@ -126,7 +159,9 @@
                         }
                     }
                 }
-            },
+            }
+        },
+        "/api/providers/{id}": {
             "delete": {
                 "tags": [
                     "Fornecedor"
@@ -135,6 +170,29 @@
                 "responses": {
                     "204": {
                         "description": "Não possui retorno."
+                    },
+                    "400": {
+                        "description": "Erro de validação de campo ou erro de comunicação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorWithContext"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/providers/monthly-payment": {
+            "get": {
+                "tags": [
+                    "Fornecedor"
+                ],
+                "summary": "Busca o total de mensalidades dos fornecdores do usuário/empresa.",
+                "responses": {
+                    "200": {
+                        "description": "Retorno o valor total das mensalidades Ex: R$ 500,00."
                     },
                     "400": {
                         "description": "Erro de validação de campo ou erro de comunicação",
@@ -207,7 +265,7 @@
                 "title": "Retorno de cadastro de fornecedor",
                 "properties": {
                     "data": {
-                    "type": "object",
+                        "type": "object",
                         "properties": {
                             "id": {
                                 "type": "integer"
@@ -225,6 +283,57 @@
                     }
                 },
                 "type": "object"
+            },
+            "Register": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "confirm_password": {
+                        "type": "string"
+                    },
+                    "cnpj": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "cep": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Login": {
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Provider": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "monthlyPayment": {
+                        "type": "number"
+                    }
+                }
             }
         }
     }
