@@ -44,8 +44,8 @@ class UserService
         try {
             Validator::make($params, [
                 'name' => 'required|string',
-                'email' => 'required|email',
-                'cnpj' => 'required',
+                'email' => 'required|email|unique:users',
+                'cnpj' => 'required:unique:users',
                 'address' => 'required|string',
                 'cep' => 'required',
                 'phone' => 'required',

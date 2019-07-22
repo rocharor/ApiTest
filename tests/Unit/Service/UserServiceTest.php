@@ -78,7 +78,7 @@ class UserServiceTest extends TestCase
             'confirm_password' => 'password',
         ]);
 
-        $return = $this->assertEquals('token-123', $return);
+        $this->assertEquals('token-123', $return);
     }
 
     /**
@@ -90,7 +90,7 @@ class UserServiceTest extends TestCase
             ->once()
             ->andReturn(null);
 
-        $return = $this->userService->store([
+        $this->userService->store([
             'name' => 'name',
             'email' => 'test@test.com',
             'cnpj' => 'cnpj',

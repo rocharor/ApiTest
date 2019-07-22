@@ -45,7 +45,7 @@ class ProviderService
         try {
             Validator::make($params, [
                 'name' => 'required|string',
-                'email' => 'required|email',
+                'email' => 'required|email|unique:providers',
                 'monthlyPayment' => 'required',
             ])->validate();
 
